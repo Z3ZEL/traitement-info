@@ -1,71 +1,26 @@
 import pandas as pd
-import prince
-data = pd.read_csv("res/nombre-origine.csv",encoding = 'utf-8')
-# Check for missing values
-null_values = data.isnull()
-# Drop rows with missing values
-data = data.dropna()
+import sklearn.svm as SVC
+
+df = pd.read_csv('res/data.csv')
+df = df.drop(['ID ','name ','category ','main_category ','state ','deadline ','launched ','usd pledged ','Unnamed: 13','Unnamed: 14', 'Unnamed: 15','Unnamed: 16'], axis=1)
+
+#Erase all rows with NaN values
+df = df.dropna()
+
+df_reworked= df[['goal ','pledged ','backers ']]
+
+#Clean all none numeric values
+df_reworked = df_reworked[df_reworked['goal '].str.isnumeric()]
+df_reworked = df_reworked[df_reworked['pledged '].str.isnumeric()]
+df_reworked = df_reworked[df_reworked['backers '].str.isnumeric()]
 
 
+model = SVC.SVC(kernel='linear')
+model.fit(df_reworked[['goal ','backers ']], df_reworked['pledged '])
 
-data_numbers = data.drop(columns=["Qualificatifs de données","Juridiction","Origine"], axis=1);
-data_numbers.columns = ["Année","Nombre (nul)"]
-
-
-
-pca = prince.PCA(
-    n_components=2,
-    n_iter=3,
-    copy=True,
-    check_input=True,
-    engine='auto',
-    random_state=42,
-)
-
-pca = pca.fit(data_numbers)
-
-ax = pca.plot_row_coordinates(
-    X=data_numbers,
-    ax=None,
-    figsize=(6, 6),
-    x_component=0,
-    y_component=1,
-    color_labels=data["Origine"],
-    labels=None,
-    ellipse_outline=False,
-    ellipse_fill=True,
-    show_points=True
-)
+df_test = pd.read_csv('res/test.csv')
+pred = model.predict(df_test[['goal ','backers ','country ']])
+print(pred)
 
 
-ax.get_figure().savefig('res/pca.png')
-print(pca.column_correlations(data_numbers))
-
-# mca = prince.MCA(
-#     n_components=2,
-#     n_iter=3,
-#     copy=True,
-#     check_input=True,
-#     engine='auto',
-#     random_state=42,
-# )
-
-
-# mca  = mca.fit(data_numbers)
-# ax = mca.plot_coordinates(
-#     X=data_numbers,
-#     ax=None,
-#     figsize=(6, 6),
-#     show_row_points=True,
-#     row_points_size=10,
-#     show_row_labels=False,
-#     show_column_points=True,
-#     column_points_size=30,
-#     show_column_labels=False,
-#     legend_n_cols=1
-# )
-
-# ax.get_figure().savefig('res/pca.png')
-
-
-# print(data_numbers.head())
+print(df.head())
