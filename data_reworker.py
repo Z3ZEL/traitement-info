@@ -38,4 +38,8 @@ class Reworker:
         df_reworked['main_category '] = df_reworked['main_category '].map({'Film & Video': 1, 'Music': 2, 'Publishing': 3, 'Games': 4, 'Technology': 5, 'Design': 6, 'Art': 7, 'Food': 8, 'Fashion': 9, 'Theater': 10, 'Comics': 11, 'Photography': 12, 'Crafts': 13, 'Journalism': 14, 'Dance': 15})
         #map to 16 for others
         df_reworked['main_category '] = df_reworked['main_category '].fillna(0)
+
+        df['backers '] = df['backers '].astype(float)
+        df['goal '] = df['goal '].astype(float)
+        df['pledged '] = df['pledged '].astype(float)
         return df_reworked
