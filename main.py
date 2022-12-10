@@ -1,23 +1,26 @@
-import pandas as pd
+from data_reworker import Reworker
+from data_regression import Regression
 from sklearn import linear_model
+import pandas as pd
+import numpy as np
+import sys
 
-df = pd.read_csv('res/data.csv')
-df = df.drop(['ID ','name ','category ','main_category ','state ','deadline ','launched ','usd pledged ','Unnamed: 13','Unnamed: 14', 'Unnamed: 15','Unnamed: 16'], axis=1)
+def main():
+    #Take the path of the csv file as an argument
+    if(len(sys.argv) < 2):
+        print("Please provide the path of the csv path of the test data file")
+        return
+    df = pd.read_csv('res/data.csv')
+    df = Reworker(df).rework();
+    model = Regression(df).Train()
+    df_test = pd.read_csv(sys.argv[1])
+    pred = model.Predict(df_test)
+    print(pred)
+    if (len(sys.argv) >= 3):
+        #Save numpy array pred to a csv file without exp notation
+        np.set_printoptions(suppress=True)
+        np.savetxt("res/saved_result/"+ sys.argv[2] + ".csv", pred, delimiter=",", fmt='%i')
 
-#Erase all rows with NaN values
-df = df.dropna()
 
-df_reworked= df[['goal ','pledged ','backers ']]
-
-#Clean all none numeric values
-df_reworked = df_reworked[df_reworked['goal '].str.isnumeric()]
-df_reworked = df_reworked[df_reworked['pledged '].str.isnumeric()]
-df_reworked = df_reworked[df_reworked['backers '].str.isnumeric()]
-
-
-model = linear_model.LinearRegression();
-model.fit(df_reworked[['goal ','backers ']], df_reworked['pledged '])
-
-df_test = pd.read_csv('res/test.csv')
-pred = model.predict(df_test[['goal ','backers ']])
-print(pred)
+if __name__ == "__main__":
+    main()
