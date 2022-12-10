@@ -1,10 +1,10 @@
 import sklearn as sk
-from sklearn import linear_model
+from sklearn import linear_model,cluster,svm
 
 class Regression:
     def __init__(self, df):
         self.df = df
-        self.model = linear_model.LinearRegression()
+        self.model = linear_model.LinearRegression();
 
     def Train(self): 
         pledge = self.df[['pledged ']]
@@ -13,6 +13,6 @@ class Regression:
         return self
     
     def Predict(self, df_test):
-        self.pred = self.model.predict(df_test[['goal ','backers ','country ','currency ','main_category ','duration ']])
+        self.pred = self.model.predict(df_test[['goal ','backers ','currency ','main_category ','duration ']])
         return self.pred
 
