@@ -64,32 +64,46 @@ Aussi, nous avons des informations sur les devises(monnaie) et pays d'origine de
 \section{Analyse des résultats}
 \label{analyse}
 
-\subsection{Montant donné par donateur en fonction de la devise}
+\subsection{Montant donné par donateur en fonction de la catégorie}
 \label{devise}
+Nous pouvons observer sur la figure \ref{fig_categorie} que c'est bien.
+
 \begin{figure}[htbp]
     \graphicspath{{graph/}} 
-    \centerline{\includegraphics[scale=0.5]{currency_comparison}}
+    \centerline{\includegraphics[scale=0.4]{main_category.jpg}}
     \caption{Montant donné en fonction du nombre de donateurs et de la devise}
+    \label{fig_categorie}
+\end{figure}    
+\newpage 
+
+\subsection{Montant donné par donateur en fonction de la devise}
+\label{categorie}
+\tabto{1cm} Nous pouvons observer sur la figure \ref{fig_devise} un graphique représentant le montant total récolté (en équivalent US dollar) en fonction de la devise et du nombre de donateurs. 
+Ainsi notre régression linéaire nous permet de déterminer la moyenne du montant des contributions par devise. En effet, cette moyenne est égale à la pente des droites. Ainsi, on voit se distinguer 3 devises dont le montant moyen des contributions est plus élevé: 
+le Dollar de Honk Kong, la couronne danoise et la couronne norvégienne. Au contraire, la livre sterling est la monnaie dont les contributions sont en moyenne les plus faibles.
+
+\begin{figure}[htbp]
+    \graphicspath{{graph/}} 
+    \centerline{\includegraphics[scale=0.4]{currency_comparison.jpg}}
+    \caption{Montant donné en fonction du nombre de donateurs et de la catégorie}
     \label{fig_devise}
 \end{figure}
 
-\subsection{Montant donné par donateur en fonction de la catégorie}
-\label{categorie}
-\begin{figure}[htbp]
-    \graphicspath{{graph/}} 
-    \centerline{\includegraphics[scale=0.5]{main_category}}
-    \caption{Montant donné en fonction du nombre de donateurs et de la catégorie}
-    \label{fig_categorie}
-\end{figure}
+\newpage
 
 \subsection{Réussite des campagnes}
 \label{reussite}
+\tabto{1cm} Nous pouvons observer sur la figure \ref{fig_reussite} qu'il y a énormément de campagnes qui se situent dans le coin en bas à gauche, c'est-à-dire que la plupart récolte pas énormément d'argent et mobilisent peu de donateurs.
+Cependant, une partie non négligeable des campagnes parviennent à dépasser leur objectif, il y a aussi des "anomalies", notamment une campagne qui n'a pas beaucoup de donateurs et un objectif initial peu élevé mais qui a tout de même récolté énormément d'argent.
+
 \begin{figure}[htbp]
     \graphicspath{{graph/}} 
-    \centerline{\includegraphics[scale=0.5]{goal_pledged_backers}}
+    \centerline{\includegraphics[scale=0.3]{goal_pledged_backers.jpg}}
     \caption{Réprésentation dans l'espace des campganes Kickstarter}
     \label{fig_reussite}
 \end{figure}
+
+\newpage
 
 \section{Conclusion}
 \label{Conclusion}
