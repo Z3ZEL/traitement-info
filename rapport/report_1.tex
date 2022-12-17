@@ -49,28 +49,76 @@
 Pour cela, nous utiliserons différentes méthodes pour traiter les données, notamment des régressions linéaires pour déterminer quelles catégories sont les plus prolifiques ou encore quel monnaie (et donc quel pays) est la plus donnée par donateurs.
 \tabto{1cm} Nous expliquerons plus précisemment dans la section \ref{donnees} la base de données que nous allons utiliser, dans la section \ref{methode}, nous détaillerons la méthode avec laquelle nous avons traité ces données.
 Ensuite, dans la section \ref{analyse}, nous analyserons les différents résultats obtenus. Enfin, nous concluerons en section \ref{Conclusion}. 
+\\ 
+\\
 
 \section{Présentation des données}
 \label{donnees}
 \tabto{1cm} Les données sur lesquelles nous allons travailler sont des données nous donnant diverses informations sur des projets Kickstarter. Kickstarter est une plateforme de financement partifcipatif qui permet à de noumbreux indépendants de récolter des fonds pour développer 
-leur projet. Ainsi, des projets comme le jeu Star Citizen ou la montre Pebble Time ont pu voir le jour grâce au soutien des donateurs. Les données nous donnent comme information la catégorie, l'objectif initial, le nombre de donateurs et le montant levé au total. Nous avons aussi les dates de début et de fin de la campagne.
-Aussi, nous avons des informations sur les devises(monnaie) et pays d'origine de ces campagnes.
+leur projet. Ainsi, des projets comme le jeu Star Citizen ou la montre Pebble Time ont pu voir le jour grâce au soutien des donateurs. Les données comportent des informations sur plus de 240 000 campagnes qui se sont déroulées entre 2010 et 2016, elles nous donnent comme information la catégorie, l'objectif initial, le nombre de donateurs et le montant levé au total. Nous avons aussi les dates de début et de fin de la campagne.
+Aussi, nous avons des informations sur les devises(monnaie) et pays d'origine de ces campagnes. Ainsi, ces données sont pour la plupart quantitatives et vont être relativement facile à analyser.
+\\
+\\
 
 \section{Présentation de la méthode}
 \label{methode}
 \tabto{1cm} Nous avons décidé d'étudier plusieurs points: les catégories qui rapportent le plus d'argent par donateur, le montant donnée par donateur en fonction de la devise et enfin de voir si les campagnes remplissent généralement leur objectif initial.
-\tabto{1cm}Pour les deux premiers points, nous utiliserons des régressions linéaires. 
+\tabto{1cm}Pour les deux premiers points, nous utiliserons des régressions linéaires. Pour effectuer ces régressions linéaires, nous aurons besoin de calculer la moyenne des données selon x et y. On considère $N$ valeurs d'un caractère $x_1$, $x_2$,\dots,$x_N$. 
+La {\bf moyenne}, notée $\overline{x}$, est: 
+\vspace{0.3cm}
+
+\[
+\overline{x}=\dfrac{x_1+x_2+\dots+x_N}{N}
+=\dfrac{1}{N}\sum_{i=1}^N x_i
+\]
+Et pour les y:
+\vspace{0.3cm}
+\[
+\overline{y}=\dfrac{y_1+y_2+\dots+y_N}{N}
+=\dfrac{1}{N}\sum_{i=1}^N y_i
+\]
+\vspace{0.3cm}
+
+Il nous faut aussi la variance des x, et la covariance de x et y:
+\vspace{0.3cm}
+La {\bf variance d'une série} est la moyenne des carrés des écarts à la moyenne: 
+\vspace{0.3cm}
+
+\[
+
+V(x)=\dfrac{n_1\lp x_1-\overline{x}\rp^2+n_2\lp x_2-\overline{x}\rp^2+\dots
+n_N\lp x_N-\overline{x}\rp^2}{N}
+\dsp=\dfrac{1}{N}\sum_{i=1}^N n_i\lp x_i-\overline{x}\rp^2
+\]
+\vspace{0.3cm}
+La {\bf covariance} de x et y est donnée par la formule :
+\vspace{0.3cm}
+\[
+Cov(x,y)=\dfrac{1}{N}\sum_{i=1}^N (x_i-\overline{x})(y_i-\overline{y})
+\]
+\vspace{0.3cm}
+
+Le but d'une régression linéaire est de former une droite en fonction d'un nuage de points. Nous allons donc obtenir une droite de formule : y=ax+b avec: \\
+\[
+    a=\dfrac{Cov(x,y)}{V(x)} \quad \text{et} \quad b=\overline{y}-a\overline{x}
+\]
+\vspace{0.3cm}
+
 \tabto{1cm} Pour le troisième, nous réprésenteront les campagnes dans un espace en 3 dimensions avec commes axes: le montant récolté, l'objectif et le nombre de donateurs.
+\\
+\\
+
 \section{Analyse des résultats}
 \label{analyse}
 
 \subsection{Montant donné par donateur en fonction de la catégorie}
 \label{devise}
-Nous pouvons observer sur la figure \ref{fig_categorie} que c'est bien.
+Nous pouvons observer sur la figure \ref{fig_categorie} que certaines catégories attirent de plus gros donateurs. En effet, la catégorie "Arts" possède des donateurs bien plus généreux en moyenne. Des catégories comme "Musique", "Films" et autres ont aussi d'importantes moyennes de dons. 
+En revanche, certaines catégories peinent à avoir d'importantes contributions en moyenne, notamment pour la catégorie "Comics".
 
 \begin{figure}[htbp]
     \graphicspath{{graph/}} 
-    \centerline{\includegraphics[scale=0.4]{main_category.jpg}}
+    \centerline{\includegraphics[scale=0.5]{main_category.jpg}}
     \caption{Montant donné en fonction du nombre de donateurs et de la devise}
     \label{fig_categorie}
 \end{figure}    
@@ -84,7 +132,7 @@ le Dollar de Honk Kong, la couronne danoise et la couronne norvégienne. Au cont
 
 \begin{figure}[htbp]
     \graphicspath{{graph/}} 
-    \centerline{\includegraphics[scale=0.4]{currency_comparison.jpg}}
+    \centerline{\includegraphics[scale=0.5]{currency_comparison.jpg}}
     \caption{Montant donné en fonction du nombre de donateurs et de la catégorie}
     \label{fig_devise}
 \end{figure}
@@ -98,12 +146,12 @@ Cependant, une partie non négligeable des campagnes parviennent à dépasser le
 
 \begin{figure}[htbp]
     \graphicspath{{graph/}} 
-    \centerline{\includegraphics[scale=0.3]{goal_pledged_backers.jpg}}
+    \centerline{\includegraphics[scale=0.4]{goal_pledged_backers.jpg}}
     \caption{Réprésentation dans l'espace des campganes Kickstarter}
     \label{fig_reussite}
 \end{figure}
-
-\newpage
+\\
+\\
 
 \section{Conclusion}
 \label{Conclusion}
